@@ -16,7 +16,7 @@ class FollyConan(ConanFile):
     exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt"]
     generators = "cmake"
-    source_subfolder = "source_subfolder"
+    source_subfolder = "folly"
     build_subfolder = "build_subfolder"
     settings = "os", "arch", "compiler", "build_type"
     options = {
@@ -26,13 +26,14 @@ class FollyConan(ConanFile):
         "shared=False",
     )
     requires = (
-        "OpenSSL/1.0.2m@conan/stable",
-        "zlib/1.2.11@conan/stable",
-        "zstd/1.3.3@bincrafters/stable",
-        "lz4/1.8.0@bincrafters/stable",
-        "boost_thread/1.66.0@bincrafters/stable",
-        "cmake_findboost_modular/1.66.0@bincrafters/stable",
-        "libevent/2.0.22@bincrafters/stable"
+        "gflags/2.2.1@ant/stable",
+        "glog/0.3.5@ant/stable",
+        "double-conversion/3.0.0@ant/stable",
+        "OpenSSL/1.0.2n@ant/stable",
+        "zlib/1.2.11@ant/stable",
+        "lz4/1.8.0@ant/stable",
+        "boost/1.65.0@ant/stable",
+        "libevent/2.0.22@ant/stable"
     )
     
 
@@ -41,6 +42,9 @@ class FollyConan(ConanFile):
         tools.get("{0}/archive/v{1}.tar.gz".format(source_url, self.release))
         extracted_dir = self.name + "-" + self.release
         os.rename(extracted_dir, self.source_subfolder)
+        to_be_replace = "\"\/build\/\""
+        pattern = "\"\/%s\/build\/\"" % self.source_subfolder
+        self.run("sed -i \"\" 's/%s/%s/' %s/CMakeLists.txt" % (to_be_replace, pattern, self.source_subfolder))
 
     def _configure_cmake(self):
         cmake = CMake(self)
