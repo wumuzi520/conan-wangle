@@ -28,12 +28,13 @@ class FollyConan(ConanFile):
     requires = (
         "gflags/2.2.1@ant/stable",
         "glog/0.3.5@ant/stable",
+        "lzma/5.2.3@ant/stable",
         "double-conversion/3.0.0@ant/stable",
         "OpenSSL/1.0.2n@ant/stable",
         "zlib/1.2.11@ant/stable",
-        "lz4/1.8.0@ant/stable",
-        "boost/1.65.0@ant/stable",
-        "libevent/2.0.22@ant/stable"
+        "lz4/1.7.5@ant/stable",
+        "Boost/1.65.0@ant/stable",
+        "libevent/2.1.8@ant/stable"
     )
     
 
@@ -49,6 +50,8 @@ class FollyConan(ConanFile):
     def _configure_cmake(self):
         cmake = CMake(self)
         cmake.definitions["BUILD_SHARED_LIBS"] = self.options.shared
+        cmake.definitions["FOLLY_USE_LIBCPP"] = True
+        cmake.definitions["FOLLY_HAVE_PTHREAD_ATFORK"] = True
         cmake.configure()
         return cmake
         
