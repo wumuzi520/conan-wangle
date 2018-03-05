@@ -1,7 +1,11 @@
-#include <folly/Format.h>
+#include <wangle/codec/StringCodec.h>
+#include <wangle/codec/ByteToMessageDecoder.h>
+#include <wangle/service/ClientDispatcher.h>
+#include <wangle/service/ServerDispatcher.h>
+#include <wangle/service/Service.h>
+#include <wangle/service/CloseOnReleaseFilter.h>
+#include <wangle/service/ExpiringFilter.h>
 
-int main()
-{
-    auto str = folly::format("The answers are {} and {}", 23, 42);
-    return EXIT_SUCCESS;
+int main() {
+    return 0;
 }
